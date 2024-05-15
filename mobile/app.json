@@ -27,7 +27,13 @@
       "favicon": "./assets/icons/student.png"
     },
     "plugins": [
-      "expo-router"
+      "expo-router",
+      [
+        "expo-camera",
+          {
+            "cameraPermission": "Allow Attendance to access your camera"
+          }
+      ]
     ],
     "experiments": {
       "typedRoutes": true
