@@ -1,5 +1,6 @@
 from django.test import TestCase
 from core import models
+from unittest.mock import patch
 
 class ModelTests(TestCase):
     def test_create_course(self):
@@ -41,5 +42,12 @@ class ModelTests(TestCase):
 
         self.assertEqual(str(student), f'{student.first_name} {student.last_name}')
 
+    @patch('core.models.uuid.uuid4')
+    def test_student_file_name_uuid(self, mock_uuid):
+        """Test that image is saved in the correct location"""
+        uuid = 'test-uuid'
+        mock_uuid.return_value = uuid
+        file_path = models.student_image_file_path(None, 'myimage.jpg')
 
-
+        exp_path = f'uploads/student/{uuid}.jpg'
+        self.assertEqual(file_path, exp_path)
