@@ -1,11 +1,15 @@
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.decorators import action
+import face_recognition
+
+
 
 from core.models import(
     Course,
     Lecture,
-    Student
+    Student,
+    StudentImage
 )
 
 from attendance import (
@@ -19,7 +23,7 @@ class CourseViewSet(viewsets.ModelViewSet):
 
 class StudentImageViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.StudentImageSerializer
-    queryset = Student.objects.all()
+    queryset = StudentImage.objects.all()
 
 class LectureViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.LectureSerializer
