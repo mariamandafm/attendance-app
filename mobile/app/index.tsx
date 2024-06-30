@@ -21,11 +21,11 @@ type CourseProps = Array<{
 
 export default function App() {
     const [loading, setLoading] = useState(true);
-    const [courses, setCourses] = useState<CourseProps | null>(null);
+    const [courses, setCourses] = useState<CourseProps | []>([]);
 
     async function fetchCourses() {
+        setLoading(true);
         try {
-            setLoading(true);
             const response = await api.get("api/attendance/courses/");
             setCourses(response.data);
         } catch (error) {
@@ -49,15 +49,18 @@ export default function App() {
                 <View className="w-full h-full px-4">
                     <Text className="text-3xl font-pbold text-black mt-7">Your classes</Text>
                     {
-                        courses.map((course) => (
+                        courses.length > 0 ? (courses.map((course) => (
                             <CourseButton 
+                                key={course.id}
                                 title={course.title}
                                 handlePress={() => router.push("/students")}
                                 containerStyles="mt-5 w-full"
                                 isLoading={false}
                             />
                         
-                        ))
+                        ))) : (
+                            <Text className="text-lg text-black mt-5">No classes available</Text>
+                        )
                     }
                 </View>
             </ScrollView>
